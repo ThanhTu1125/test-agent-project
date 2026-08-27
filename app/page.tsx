@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   GitBranch, 
@@ -10,64 +10,93 @@ import {
   Code2, 
   ExternalLink, 
   Sparkles, 
-  Layers, 
   Cpu, 
   ArrowUpRight,
   FolderGit2,
   Terminal,
-  Send
+  Send,
+  Copy,
+  Check,
+  Bot,
+  Flame
 } from 'lucide-react';
 
 const techStack = [
-  { name: 'Spring Boot', category: 'Backend', icon: Server, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-  { name: 'React Native', category: 'Mobile', icon: Smartphone, color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
-  { name: 'Next.js', category: 'Frontend', icon: Code2, color: 'text-fuchsia-400', bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/20' },
-  { name: 'TypeScript', category: 'Language', icon: Terminal, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+  { name: 'Spring Boot', category: 'Backend Engine', icon: Server, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+  { name: 'React Native', category: 'Mobile App', icon: Smartphone, color: 'text-cyan-400', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+  { name: 'Next.js 15', category: 'Fullstack Web', icon: Code2, color: 'text-fuchsia-400', bg: 'bg-fuchsia-500/10', border: 'border-fuchsia-500/20' },
+  { name: 'Git Agent / CI', category: 'Automation', icon: Bot, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
 ];
 
 const projects = [
   {
     id: 1,
-    title: 'Fullstack Mobile Application',
+    title: 'Mobile Architecture Core',
     tag: 'Mobile & Backend',
-    desc: 'Hệ thống ứng dụng di động tối ưu hoá hiệu năng, giao tiếp RESTful API & WebSocket thời gian thực.',
+    desc: 'Hệ sinh thái mobile đa nền tảng tối ưu RAM, tích hợp RESTful Spring Boot và bảo mật đa tầng.',
     tech: ['React Native', 'Spring Boot', 'PostgreSQL'],
     link: 'https://github.com/ThanhTu1125',
-    active: true
+    featured: true
   },
   {
     id: 2,
-    title: 'Agentic AI Orchestrator',
-    tag: 'AI System',
-    desc: 'Hệ thống tự động hoá tác vụ và điều phối agent lập trình thông minh trên nền tảng đám mây.',
-    tech: ['Next.js', 'Cloudflare Workers', 'AI Agent'],
+    title: 'Autonomous Git Agent',
+    tag: 'DevOps & AI',
+    desc: 'Hệ thống tự động hóa commit, review diff và điều phối pipeline GitHub hoàn toàn tự động.',
+    tech: ['TypeScript', 'GitHub Actions', 'AI Orchestration'],
     link: 'https://github.com/ThanhTu1125',
-    active: true
+    featured: true
   },
   {
     id: 3,
-    title: 'High-Throughput Microservices',
-    tag: 'Backend',
-    desc: 'Kiến trúc backend phân tán chịu tải cao, tích hợp bảo mật phân quyền token-based.',
-    tech: ['Java 21', 'Spring Cloud', 'Docker'],
+    title: 'Cloudflare Edge Gateway',
+    tag: 'Cloud & Edge',
+    desc: 'Triển khai ứng dụng phân tán toàn cầu tại edge server với tốc độ phản hồi sub-millisecond.',
+    tech: ['Cloudflare Pages', 'Static Engine', 'Tailwind CSS'],
     link: 'https://github.com/ThanhTu1125',
-    active: true
+    featured: false
   }
 ];
 
 export default function Home() {
   const [filter, setFilter] = useState('All');
-  const categories = ['All', 'Mobile & Backend', 'Backend', 'AI System'];
+  const [copied, setCopied] = useState(false);
+  const [terminalText, setTerminalText] = useState('');
+  const fullText = 'const developer = { focus: "Backend & Mobile", vibe: "Cyber-minimal" };';
+
+  const categories = ['All', 'Mobile & Backend', 'DevOps & AI', 'Cloud & Edge'];
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTerminalText(fullText.slice(0, index));
+      index++;
+      if (index > fullText.length) {
+        clearInterval(interval);
+      }
+    }, 40);
+    return () => clearInterval(interval);
+  }, []);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText('thanhtu.dev@gmail.com');
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const filteredProjects = filter === 'All' 
     ? projects 
     : projects.filter(p => p.tag === filter);
 
   return (
-    <main className="min-h-screen bg-[#090a0f] text-neutral-100 flex justify-center px-4 py-8 sm:py-12 relative overflow-hidden font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Background Animated Gradient Mesh */}
-      <div className="absolute top-[-10%] left-[-10%] w-[350px] h-[350px] bg-indigo-600/15 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[350px] h-[350px] bg-cyan-600/15 rounded-full blur-[120px] pointer-events-none" />
+    <main className="min-h-screen bg-[#050608] text-neutral-100 flex justify-center px-4 py-8 sm:py-12 relative overflow-hidden font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+      
+      {/* Background Animated Glows */}
+      <div className="absolute top-[-10%] left-[-15%] w-[400px] h-[400px] bg-indigo-600/15 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+      <div className="absolute bottom-[-10%] right-[-15%] w-[400px] h-[400px] bg-cyan-600/15 rounded-full blur-[140px] pointer-events-none" />
+
+      {/* Cyber Grid Subtle Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f293d0d_1px,transparent_1px),linear-gradient(to_bottom,#1f293d0d_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       <div className="w-full max-w-md space-y-4 relative z-10">
         
@@ -75,28 +104,25 @@ export default function Home() {
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="p-6 rounded-[28px] bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-2xl relative overflow-hidden group shadow-2xl shadow-black/60"
+          className="p-6 rounded-[28px] bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-2xl relative overflow-hidden group shadow-2xl shadow-black/80"
         >
-          <div className="absolute -top-12 -right-12 w-28 h-28 bg-gradient-to-br from-cyan-500/20 to-indigo-500/0 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
-          
           <div className="flex items-start justify-between">
             <div className="flex gap-4 items-center">
               <motion.div 
-                whileHover={{ scale: 1.05, rotate: 3 }}
+                whileHover={{ scale: 1.05, rotate: 2 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-fuchsia-500 p-[2px] shadow-lg shadow-indigo-500/20 cursor-pointer"
               >
-                <div className="w-full h-full bg-[#0d0f17] rounded-[14px] flex items-center justify-center font-black text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300">
+                <div className="w-full h-full bg-[#090b10] rounded-[14px] flex items-center justify-center font-black text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-300">
                   TT
                 </div>
               </motion.div>
               <div>
                 <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
                   Tú Nguyễn
-                  <Sparkles className="w-4 h-4 text-cyan-400 animate-spin-slow" />
+                  <Sparkles className="w-4 h-4 text-cyan-400" />
                 </h1>
-                <p className="text-xs text-neutral-400 mt-0.5">Software Engineering & Fullstack</p>
+                <p className="text-xs text-neutral-400 mt-0.5">Software Engineering & Architecture</p>
               </div>
             </div>
             
@@ -106,26 +132,29 @@ export default function Home() {
             </span>
           </div>
 
-          <p className="text-xs text-neutral-300/80 mt-4 leading-relaxed font-normal">
-            Đam mê xây dựng kiến trúc hệ thống backend mạnh mẽ, ứng dụng di động mượt mà và các giao diện web mang trải nghiệm tinh gọn.
-          </p>
+          {/* Terminal Typing Line */}
+          <div className="mt-4 p-3 rounded-xl bg-black/50 border border-neutral-800/60 flex items-center gap-2 text-[11px] font-mono text-cyan-300/90">
+            <Terminal className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
+            <span className="truncate">{terminalText}</span>
+            <span className="w-1.5 h-3.5 bg-cyan-400 animate-pulse inline-block" />
+          </div>
         </motion.div>
 
         {/* Tech Stack Bento Grid */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ delay: 0.1 }}
           className="grid grid-cols-2 gap-2.5"
         >
-          {techStack.map((tech, idx) => {
+          {techStack.map((tech) => {
             const Icon = tech.icon;
             return (
               <motion.div
                 key={tech.name}
                 whileHover={{ y: -3, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
-                className={`p-3.5 rounded-2xl bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-xl flex items-center gap-3 cursor-default`}
+                className="p-3.5 rounded-2xl bg-neutral-900/40 border border-neutral-800/80 backdrop-blur-xl flex items-center gap-3 cursor-default"
               >
                 <div className={`p-2 rounded-xl ${tech.bg} ${tech.border} border`}>
                   <Icon className={`w-4 h-4 ${tech.color}`} />
@@ -150,7 +179,7 @@ export default function Home() {
             <button
               key={cat}
               onClick={() => setFilter(cat)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 relative ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all duration-300 ${
                 filter === cat 
                   ? 'text-white bg-neutral-800 border border-neutral-700 shadow-md' 
                   : 'text-neutral-400 hover:text-neutral-200 bg-neutral-900/30 border border-transparent'
@@ -207,11 +236,11 @@ export default function Home() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Action Link Footer */}
+        {/* Quick Action Buttons */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ delay: 0.3 }}
           className="grid grid-cols-2 gap-2.5 pt-1"
         >
           <motion.a 
@@ -222,17 +251,18 @@ export default function Home() {
             rel="noopener noreferrer"
             className="p-3 rounded-2xl bg-neutral-900/60 border border-neutral-800 flex items-center justify-center gap-2 text-xs font-semibold hover:bg-neutral-800/80 transition-all text-neutral-200 shadow-md"
           >
-            <GitBranch className="w-4 h-4 text-neutral-400" /> GitHub
+            <GitBranch className="w-4 h-4 text-neutral-400" /> GitHub Profile
           </motion.a>
           
-          <motion.a 
+          <motion.button 
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
-            href="mailto:contact@thanhtu.dev" 
+            onClick={copyEmail}
             className="p-3 rounded-2xl bg-gradient-to-r from-indigo-600/80 to-cyan-600/80 border border-cyan-500/30 flex items-center justify-center gap-2 text-xs font-semibold hover:opacity-90 transition-all text-white shadow-lg shadow-indigo-500/20"
           >
-            <Send className="w-3.5 h-3.5" /> Kết nối ngay
-          </motion.a>
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+            <span>{copied ? 'Đã sao chép email' : 'Sao chép Email'}</span>
+          </motion.button>
         </motion.div>
 
       </div>
